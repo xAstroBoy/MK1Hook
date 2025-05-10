@@ -36,6 +36,20 @@ static const char* szCharacters[] = {
 	"CH15_FemScorpionCH15",
 	"CH15_FemSubZeroCH15",
 	"BOSS_Boss_Floyd",
+	"CHAR_T1000",
+	"CHAR_ShangTsung",
+	"CHAR_QuanChi",
+	"CHAR_OmniMan",
+	"CHAR_Peacemaker",
+	"CHAR_Ermac",
+	"CHAR_Homelander",
+	"CHAR_Takeda",
+	"CHAR_Cyrax",
+	"CHAR_Sektor",
+	"CHAR_NoobSaibot",
+	"CHAR_Havik_TitanNPC",
+	"CHAR_Ghostface",
+	"CHAR_Conan",
 	// rest of the cast
 	"CHAR_Ashrah",
 	"CHAR_Baraka",
@@ -153,7 +167,13 @@ static const char* szKitbashMM[] = {
 };
 
 static const char* szCharactersBoss[] = {
-
+	"BOSS_MiniBoss_LiuKang",
+	"BOSS_MiniBoss_Scorpion",
+	"BOSS_MiniBoss_Mileena_630",
+	"CHAR_Boss_ShangTsung_Tower",
+	"BOSS_Titan_QuanChi",
+	"BOSS_Grunt_ShangTsung_A",
+	"BOSS_Grunt_Takeda_A",
 	"BOSS_Grunt_Ashrah_A",
 	"BOSS_Grunt_Baraka_A",
 	"BOSS_Grunt_Geras_A",
@@ -180,6 +200,15 @@ static const char* szCharactersBoss[] = {
 
 
 static const char* szKameos[] = {
+	"KHAR_MadamBoKAM",
+	"KHAR_TremorKAM",
+	"KHAR_KhameleonKAM",
+	"KHAR_JanetCageKAM",
+	"KHAR_MavadoKAM",
+	"KHAR_FerraKAM",
+	"KHAR_CyraxKAM_NPC",
+	"KHAR_SektorKAM_NPC",
+	"KHAR_TakedaKAM_NPC",
 	"KHAR_AdamKAM",
 	"KHAR_BarakaKAM_NPC",
 	"KHAR_CyraxKAM",
@@ -448,96 +477,6 @@ void MK12Menu::SetupCharacterLists()
 		m_KameoList.push_back(szKameos[i]);
 	}
 
-	if (SteamAPI::IsAppInstalled(2576780) || SteamAPI::IsAppInstalled(2576800))
-	{
-		m_CharacterList.push_back("CHAR_ShangTsung");
-		m_CharacterList.push_back("CHAR_Boss_ShangTsung_Tower");
-		m_CharacterList.push_back("BOSS_Grunt_ShangTsung_A");
-	}
-
-	if (SteamAPI::IsAppInstalled(2576780) || SteamAPI::IsAppInstalled(2636080))
-		m_CharacterList.push_back("CHAR_OmniMan");
-
-	if (SteamAPI::IsAppInstalled(2576780) || SteamAPI::IsAppInstalled(2636090))
-		m_KameoList.push_back("KHAR_TremorKAM");
-
-	if (SteamAPI::IsAppInstalled(2576780) || SteamAPI::IsAppInstalled(2695680))
-	{
-		m_CharacterList.push_back("CHAR_QuanChi");
-		m_CharacterList.push_back("BOSS_Titan_QuanChi");
-	}
-
-	if (SteamAPI::IsAppInstalled(2576780) || SteamAPI::IsAppInstalled(2695690))
-		m_KameoList.push_back("KHAR_KhameleonKAM");
-
-	if (SteamAPI::IsAppInstalled(2576780) || SteamAPI::IsAppInstalled(2777460))
-		m_CharacterList.push_back("CHAR_Peacemaker");
-
-	if (SteamAPI::IsAppInstalled(2576780) || SteamAPI::IsAppInstalled(2777480))
-		m_KameoList.push_back("KHAR_JanetCageKAM");
-
-	if (SteamAPI::IsAppInstalled(2576780) || SteamAPI::IsAppInstalled(2880670))
-		m_CharacterList.push_back("CHAR_Ermac");
-
-	if (SteamAPI::IsAppInstalled(2576780) || SteamAPI::IsAppInstalled(2968440))
-		m_CharacterList.push_back("CHAR_Homelander");
-
-	if (SteamAPI::IsAppInstalled(2576780) || SteamAPI::IsAppInstalled(2880680))
-		m_KameoList.push_back("KHAR_MavadoKAM");
-
-	if (SteamAPI::IsAppInstalled(2576780) || SteamAPI::IsAppInstalled(2968450))
-		m_KameoList.push_back("KHAR_FerraKAM");
-
-	if (SteamAPI::IsAppInstalled(2576780) || SteamAPI::IsAppInstalled(3049390))
-	{
-		m_CharacterList.push_back("CHAR_Takeda");
-		m_CharacterList.push_back("BOSS_Grunt_Takeda_A");
-	}
-
-	if (SteamAPI::IsAppInstalled(3233540) || SteamAPI::IsAppInstalled(3161240) || SteamAPI::IsAppInstalled(3134000) || SteamAPI::IsAppInstalled(3133990) || SteamAPI::IsAppInstalled(3168140))
-	{
-		m_CharacterList.push_back("CHAR_Cyrax");
-	}
-
-	if (SteamAPI::IsAppInstalled(3233540) || SteamAPI::IsAppInstalled(3161240) || SteamAPI::IsAppInstalled(3134000) || SteamAPI::IsAppInstalled(3133990) || SteamAPI::IsAppInstalled(3168150))
-	{
-		m_CharacterList.push_back("CHAR_Sektor");
-	}
-
-	if (SteamAPI::IsAppInstalled(3233540) || SteamAPI::IsAppInstalled(3161240) || SteamAPI::IsAppInstalled(3134000) || SteamAPI::IsAppInstalled(3133990) || SteamAPI::IsAppInstalled(3168160))
-	{
-		m_CharacterList.push_back("CHAR_NoobSaibot");
-	}
-
-	if (SteamAPI::IsAppInstalled(3233540) || SteamAPI::IsAppInstalled(3161240) || SteamAPI::IsAppInstalled(3134000) || SteamAPI::IsAppInstalled(3133990))
-	{
-		m_CharacterList.push_back("CHAR_Havik_TitanNPC");
-
-
-		m_KameoList.push_back("KHAR_CyraxKAM_NPC");
-		m_KameoList.push_back("KHAR_SektorKAM_NPC");
-		m_KameoList.push_back("KHAR_TakedaKAM_NPC");
-	}
-
-	if (SteamAPI::IsAppInstalled(3233540) || SteamAPI::IsAppInstalled(3161240) || SteamAPI::IsAppInstalled(3134000) || SteamAPI::IsAppInstalled(3133990) || SteamAPI::IsAppInstalled(3286290))
-	{
-		m_CharacterList.push_back("CHAR_Ghostface");
-	}
-
-	if (SteamAPI::IsAppInstalled(3286310) || SteamAPI::IsAppInstalled(3161240) || SteamAPI::IsAppInstalled(3134000) || SteamAPI::IsAppInstalled(3133990) || SteamAPI::IsAppInstalled(3286290))
-	{
-		m_CharacterList.push_back("CHAR_Conan");
-	}
-
-	if (SteamAPI::IsAppInstalled(3286300) || SteamAPI::IsAppInstalled(3161240) || SteamAPI::IsAppInstalled(3134000) || SteamAPI::IsAppInstalled(3133990) || SteamAPI::IsAppInstalled(3286290))
-	{
-		m_CharacterList.push_back("CHAR_T1000");
-	}
-
-	if (SteamAPI::IsAppInstalled(3490300) || SteamAPI::IsAppInstalled(3233540) || SteamAPI::IsAppInstalled(3161240) || SteamAPI::IsAppInstalled(3134000) || SteamAPI::IsAppInstalled(3133990))
-	{
-		m_KameoList.push_back("KHAR_MadamBoKAM");
-	}
 
 	for (auto& chr : m_CharacterList)
 		m_TagList.push_back(chr);
