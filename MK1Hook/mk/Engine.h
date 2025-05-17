@@ -40,8 +40,9 @@ bool IsPartnerTeam(TEAM_NUM plr);
 void SetCharacterMKX(PLAYER_NUM plr, char* name, bool tag = false);
 void SetCharacterSkin(PLAYER_NUM plr, char* name);
 void SetCharacterExtraMoveset(PLAYER_NUM plr, char* name);
-void SetCharacterAI(PLAYER_NUM plr, char* script, int level);
+void SetCharacterAI(PLAYER_NUM plr, AIFighter::IDs scriptEnum, int level);
 void SetCharacterAI(PLAYER_NUM plr, int scriptID, int level);
+void SetCharacterAI(PLAYER_NUM player, const char* aiName, int difficulty);
 
 CharacterDefinitionV2* GetCharacterDefinition(PLAYER_NUM plr);
 bool IsCharacterPartner(PLAYER_NUM plr);

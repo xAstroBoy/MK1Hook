@@ -1,4 +1,4 @@
-#include "Hooks.h"
+﻿#include "Hooks.h"
 #include "..\unreal\UWorld.h"
 
 void (*orgUSceneComponent_SetWorldScale3D)(int64 obj, FVector* scale);
@@ -174,6 +174,10 @@ void PluginFightStartup(int64 ptr)
 	if (TheMenu->m_bAIDroneModifierP2)
 		SetCharacterAI(PLAYER2, TheMenu->szPlayer2AI, TheMenu->m_nAIDroneLevelP2);
 
+
+	eLog::Message("MK1Hook::Info()", "Dumping Ai....");
+	ReportAIStatus();
+
 	eLog::Message("MK1Hook::Info()", "Team1");
 	eLog::Message("MK1Hook::Info()", "P1: %s Skin: %s", GetCharacterName(PLAYER1), GetCharacterSkinName(PLAYER1));
 	if (IsPartnerTeam(TEAM1))
@@ -255,6 +259,52 @@ void PluginFightStartupAddModifiers(int64 ptr)
 
 	}
 }
+
+void ReportAIStatus()
+{
+	CharacterDefinitionV2* p1_chr = GetCharacterDefinition(PLAYER1);
+	CharacterDefinitionV2* p2_chr = GetCharacterDefinition(PLAYER2);
+
+	// placeholders
+	AIDroneInfo p1_ai = {};
+	AIDroneInfo p2_ai = {};
+	int p1_level = 0, p1_script = 0;
+	int p2_level = 0, p2_script = 0;
+
+	// grab from CharacterDefinition (your exact logic)
+	if (p1_chr) {
+		p1_level = p1_chr->GetAIDroneLevel();
+		p1_script = p1_chr->GetAIDroneScript();
+		p1_ai = *(AIDroneInfo*)((int64)p1_chr + AI_DATA_OFFSET);
+	}
+	if (p2_chr) {
+		p2_level = p2_chr->GetAIDroneLevel();
+		p2_script = p2_chr->GetAIDroneScript();
+		p2_ai = *(AIDroneInfo*)((int64)p2_chr + AI_DATA_OFFSET);
+	}
+
+
+
+	const char* p1_cfgName = AIFighter::IDToString(p1_script);
+	const char* p1_rawName = AIFighter::IDToString(p1_ai.ScriptID);
+	const char* p2_cfgName = AIFighter::IDToString(p2_script);
+	const char* p2_rawName = AIFighter::IDToString(p2_ai.ScriptID);
+
+	// now report exactly what you grabbed, including names
+	eLog::Message("AIReporter : ",
+		"P1 AI → cfgScript: %s (%d) | rawScript: %s (%d) | level: %d",
+		p1_cfgName, p1_script,
+		p1_rawName, p1_ai.ScriptID,
+		p1_level);
+
+	eLog::Message("AIReporter : ",
+		"P2 AI → cfgScript: %s (%d) | rawScript: %s (%d) | level: %d",
+		p2_cfgName, p2_script,
+		p2_rawName, p2_ai.ScriptID,
+		p2_level);
+}
+
+
 
 void PluginFightStartupTeamModeChange()
 {

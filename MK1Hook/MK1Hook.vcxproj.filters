@@ -1169,6 +1169,12 @@
     <ClCompile Include="mk\VMProc.cpp">
       <Filter>Header Files\mk</Filter>
     </ClCompile>
+    <ClCompile Include="AIFighter.h">
+      <Filter>Header Files\mk</Filter>
+    </ClCompile>
+    <ClCompile Include="AIFighter.cpp">
+      <Filter>Header Files\mk</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\README.md">

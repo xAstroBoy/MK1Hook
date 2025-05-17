@@ -1,4 +1,4 @@
-#include "Engine.h"
+﻿#include "Engine.h"
 #include "..\plugin\Hooks.h"
 #include "..\plugin\Settings.h"
 #include "..\unreal\UWorld.h"
@@ -120,7 +120,7 @@ char* GetCharacterName(PLAYER_NUM plr)
 	std::wstring name(charPath.GetStr());
 	name = name.substr(name.find_last_of(L".") + 1);
 
-	char* type = "CHAR_";
+	const char* type = "CHAR_";
 
 	if (wcsstr(charPath.GetStr(), L"KAM") || wcsstr(charPath.GetStr(), L"Kameo"))
 		type = "KHAR_";
@@ -220,17 +220,16 @@ void SetCharacterExtraMoveset(PLAYER_NUM plr, char* name)
 	chr->extraMoveset.Index = skinName.Index;
 }
 
-void SetCharacterAI(PLAYER_NUM plr, char* script, int level)
+void SetCharacterAI(PLAYER_NUM plr, AIFighter::IDs scriptEnum, int level)
 {
-	CharacterDefinitionV2* chr = GetCharacterDefinition(plr);
-
-	if (!chr)
-		return;
-	int scriptID = AIDrone::ScriptToID(script);
-	
-	chr->SetAIDrone(scriptID, level);
+	int scriptID = AIFighter::ToID(scriptEnum);
+	SetCharacterAI(plr, scriptID, level);
 }
 
+void SetCharacterAI(PLAYER_NUM player, const char* aiName, int difficulty) {
+	AIFighter::IDs aiType = AIFighter::FromString(aiName);
+	SetCharacterAI(player, aiType, difficulty);
+}
 void SetCharacterAI(PLAYER_NUM plr, int scriptID, int level)
 {
 	CharacterDefinitionV2* chr = GetCharacterDefinition(plr);

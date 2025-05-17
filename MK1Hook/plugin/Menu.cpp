@@ -1,9 +1,10 @@
-#include "Menu.h"
+﻿#include "Menu.h"
 #include "Settings.h"
 #include "../helper/eKeyboardMan.h"
 #include "../helper/eGamepadManager.h"
 #include "../helper/eMouse.h"
 #include "../mk/Scaleform.h"
+#include "../AIFighter.h"
 
 #include "../gui/notifications.h"
 #include "../gui/imgui/imgui.h"
@@ -370,12 +371,7 @@ const char* szMovesets[] = {
 	"NinjaMime",
 };
 
-const char* szAI[] = {
-	"AINormal.mko",
-	"AIButtonMasher.mko",
-	"AIDummy.mko",
-	"AIVerifier.mko",
-};
+
 
 const char* szModes[TOTAL_TEAM_MODES] = {
 	"Single",
@@ -438,8 +434,8 @@ MK12Menu::MK12Menu()
 	sprintf(szPlayer2TagCharacter, szCharacters[0]);
 	sprintf(szPlayer1Moveset, szMovesets[0]);
 	sprintf(szPlayer2Moveset, szMovesets[0]);
-	sprintf(szPlayer1AI, szAI[0]);
-	sprintf(szPlayer2AI, szAI[0]);
+	sprintf(szPlayer1AI, AIFighter::ToString(AIFighter::IDs::None));
+	sprintf(szPlayer2AI, AIFighter::ToString(AIFighter::IDs::None));
 	sprintf(szCurrentModeOption, szModes[0]);
 }
 
@@ -1698,7 +1694,7 @@ void MK12Menu::DrawScriptTab()
 
 			static char hotkeyButtonName[128] = {};
 			static char hotkeyLabel[128] = {};
-			char* hotkeyLabelType = "##";
+			const char* hotkeyLabelType = "##";
 
 			if (keyBind.deviceType == KeybindDevice_Keyboard)
 			{
@@ -1743,7 +1739,7 @@ void MK12Menu::DrawScriptTab()
 	}
 }
 
-void MK12Menu::DrawKeyBind(char* name, int* var)
+void MK12Menu::DrawKeyBind(const char* name, int* var)
 {
 	ImGui::SameLine();
 
@@ -1757,7 +1753,7 @@ void MK12Menu::DrawKeyBind(char* name, int* var)
 
 }
 
-void MK12Menu::KeyBind(int* var, char * bindName, char * name)
+void MK12Menu::KeyBind(int* var, const char * bindName, const char* name)
 {
 	ImGui::LabelText("##", bindName);
 	DrawKeyBind(name, var);
@@ -1916,22 +1912,31 @@ void MK12Menu::DrawModifiersTab()
 			}
 			ImGui::EndTabItem();
 		}
+
 		if (ImGui::BeginTabItem("AI"))
 		{
 			ImGui::TextWrapped("Reload match to change if players are AI controlled.");
 			ImGui::Separator();
 			ImGui::Checkbox("Change Player 1 AI", &m_bAIDroneModifierP1);
 
+			// === patched combo for Player 1 ===
 			if (ImGui::BeginCombo("Player 1 AI", szPlayer1AI))
 			{
-				for (int n = 0; n < IM_ARRAYSIZE(szAI); n++)
+				// loop over enum count instead of IM_ARRAYSIZE(szAI)
+				for (int n = 0; n < static_cast<int>(AIFighter::Count()); ++n)
 				{
-					bool is_selected = (szPlayer1AI == szAI[n]);
-					if (ImGui::Selectable(szAI[n], is_selected))
-						sprintf(szPlayer1AI, szAI[n]);
+					// map n→enum→display name
+					auto mode = static_cast<AIFighter::IDs>(n);
+					const char* name = AIFighter::ToString(mode);
+
+					// compare the current string buffer to this enum’s name
+					bool is_selected = (strcmp(szPlayer1AI, name) == 0);
+
+					if (ImGui::Selectable(name, is_selected))
+						sprintf(szPlayer1AI, "%s", name);
+
 					if (is_selected)
 						ImGui::SetItemDefaultFocus();
-
 				}
 				ImGui::EndCombo();
 			}
@@ -1941,22 +1946,29 @@ void MK12Menu::DrawModifiersTab()
 			ImGui::Separator();
 			ImGui::Checkbox("Change Player 2 AI", &m_bAIDroneModifierP2);
 
+			// === patched combo for Player 2 ===
 			if (ImGui::BeginCombo("Player 2 AI", szPlayer2AI))
 			{
-				for (int n = 0; n < IM_ARRAYSIZE(szAI); n++)
+				for (int n = 0; n < static_cast<int>(AIFighter::Count()); ++n)
 				{
-					bool is_selected = (szPlayer2AI == szAI[n]);
-					if (ImGui::Selectable(szAI[n], is_selected))
-						sprintf(szPlayer2AI, szAI[n]);
+					auto mode = static_cast<AIFighter::IDs>(n);
+					const char* name = AIFighter::ToString(mode);
+
+					bool is_selected = (strcmp(szPlayer2AI, name) == 0);
+
+					if (ImGui::Selectable(name, is_selected))
+						sprintf(szPlayer2AI, "%s", name);
+
 					if (is_selected)
 						ImGui::SetItemDefaultFocus();
-
 				}
 				ImGui::EndCombo();
 			}
 			ImGui::SliderInt("Player 2 AI Level", &m_nAIDroneLevelP2, 0, 19);
+
 			ImGui::EndTabItem();
 		}
+
 		if (ImGui::BeginTabItem("Tower Modifiers"))
 		{
 			ImGui::TextWrapped("Add modifiers in game and reload match to prevent potential crashes.");
@@ -2073,7 +2085,7 @@ void MK12Menu::DrawModifiersTab()
 				{
 					static char modifierLabel[128] = {};
 					sprintf(modifierLabel, "%d - %s##gm%d", i + 1, m_ModifiersList[i].name.c_str(), i);
-					char* modifierLabelType = "##";
+					const char* modifierLabelType = "##";
 					if (m_ModifiersList[i].flag & ModifierEntryFlag_P1)
 						modifierLabelType = "P1##";
 					if (m_ModifiersList[i].flag & ModifierEntryFlag_P2)
