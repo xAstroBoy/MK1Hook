@@ -60,6 +60,9 @@
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
       <LanguageStandard>stdcpp20</LanguageStandard>
+      <AdditionalOptions>/wd4018 /wd4244 /wd4267 /wd4305 /wd4566 /Zc:twoPhase
+/permissive-
+ %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -82,6 +85,9 @@
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
       <LanguageStandard>stdcpp20</LanguageStandard>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <AdditionalOptions>/wd4018 /wd4244 /wd4267 /wd4305 /wd4566 /Zc:twoPhase
+/permissive-
+ %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -418,6 +424,8 @@
     <ClInclude Include="utils\Trampoline.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="AIFighter.cpp" />
+    <ClCompile Include="AIFighter.h" />
     <ClCompile Include="dllmain.cpp" />
     <ClCompile Include="gui\dx12hook.cpp" />
     <ClCompile Include="gui\gui_impl.cpp" />

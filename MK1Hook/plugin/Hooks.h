@@ -22,6 +22,7 @@ void PluginDispatch();
 void PluginFightStartup(int64 ptr);
 void PluginFightStartupSkipDialogue(int64 ptr);
 void PluginFightStartupAddModifiers(int64 ptr);
+void ReportAIStatus();
 void PluginFightStartupTeamModeChange();
 void PluginFightStartupCacheLoadedCharacters();
 void PluginOnJump(char* mkoName);
